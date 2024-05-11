@@ -9,8 +9,4 @@ $conn = new mysqli($sName, $uName, $pass, $db_name);
 
 if ($conn->connect_errno) {
     echo $conn->connect_error;
-} else {
-    echo "Connection successfully";
-}
-
-    
+} 
