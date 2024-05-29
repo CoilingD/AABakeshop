@@ -1,3 +1,18 @@
+<?php
+session_start(); // Start session before any output
+include '../db_connection.php'; // Include database connection
+
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php"); // Redirect to login page if not logged in
+    exit;
+}
+
+// Fetch user ID from session
+$user_id = $_SESSION['user_id'];
+
+// Your remaining PHP code goes here...
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,20 +130,25 @@
                     <th>Price</th>
                     <th>Subtotal</th>
                     <th>Order Date</th>
+                    <th>Tracking Number</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Include the database connection file
-                include_once '../db_connection.php';
+                // Get user_id from session
+                $user_id = $_SESSION['user_id'];
                 
-                // SQL query to fetch orders with order date
-                $sql = "SELECT o.order_id, o.order_date, p.product_image, p.product_name, o.quantity, o.price, (o.quantity * o.price) as subtotal, o.status
+                // SQL query to fetch orders with order date for the logged-in user
+                $sql = "SELECT o.order_id, o.order_date, p.product_image, p.product_name, o.quantity, o.price, (o.quantity * o.price) as subtotal, o.status, o.tracking_number
                         FROM orders o
-                        JOIN products p ON o.product_id = p.product_id";
-                $result = $conn->query($sql);
+                        JOIN products p ON o.product_id = p.product_id
+                        WHERE o.user_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $user_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
                 
                 if ($result->num_rows > 0) {
                     // Output data of each row
@@ -140,6 +160,7 @@
                         echo "<td>".$row["price"]."</td>";
                         echo "<td>".$row["subtotal"]."</td>";
                         echo "<td>".$row["order_date"]."</td>";
+                        echo "<td>".$row["tracking_number"]."</td>";
                         if ($row["status"] == 'pending') {
                             echo "<td id='status-".$row["order_id"]."'>Pick up after 3hrs</td>";
                             echo "<td><button class='receive-btn' onclick='receiveOrder(".$row["order_id"].")'>Receive</button></td>";
@@ -150,8 +171,9 @@
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='8'>No orders found</td></tr>";
+                    echo "<tr><td colspan='9'>No orders found</td></tr>";
                 }
+                $stmt->close();
                 $conn->close();
                 ?>
             </tbody>

@@ -24,8 +24,13 @@ try {
 
     if (count($cart_items) > 0) {
         foreach ($cart_items as $item) {
-            $stmt = $conn->prepare("INSERT INTO orders (user_id, session_id, product_id, product_name, price, quantity, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("isisdii", $user_id, $session_id, $item['product_id'], $item['product_name'], $item['price'], $item['quantity'], $item['subtotal']);
+            // Generate a tracking number for each order
+            $tracking_number = generateTrackingNumber();
+            $order_date = date('Y-m-d H:i:s');
+            $status = 'pending';
+
+            $stmt = $conn->prepare("INSERT INTO orders (user_id, session_id, product_id, product_name, price, quantity, subtotal, order_date, status, tracking_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("isisdiisss", $user_id, $session_id, $item['product_id'], $item['product_name'], $item['price'], $item['quantity'], $item['subtotal'], $order_date, $status, $tracking_number);
 
             if (!$stmt->execute()) {
                 // Print error info
