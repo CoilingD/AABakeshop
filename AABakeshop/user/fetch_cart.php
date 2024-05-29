@@ -4,7 +4,7 @@ session_start();
 include '../db_connection.php'; // Ensure you have a database connection file
 
 // Initialize the cart items array
-$cart_items = []; // Set an empty array as default
+$cart_items = [];
 
 // Get the current session ID
 $session_id = session_id();
@@ -22,8 +22,11 @@ $result = $stmt->get_result();
 // Populate the cart_items array
 if ($result->num_rows > 0) {
     while ($item = $result->fetch_assoc()) {
-        $cart_items[] = $item; // Store cart items
+        $cart_items[] = $item;
     }
+} else {
+    // Debugging: No items found
+    error_log("No cart items found for session: " . $session_id);
 }
 
 // Close resources
