@@ -77,7 +77,7 @@
                 <img src="../assets/img/leaf-branch-4.png" alt="nav image" class="nav_img-1">
                 <img src="../assets/img/leaf-branch-3.png" alt="nav image" class="nav_img-2">
             </div>
-            <a href="logout.php" class="nav_link">Logout</a>
+            <a href="admin_logout.php" class="nav_link">Logout</a>
         </nav>
     </header>
 

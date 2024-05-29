@@ -104,19 +104,7 @@
                 <img src="assets/img/leaf-branch-3.png" alt="nav image" class="nav_img-2">
             </div>
                             
-            <a href="#" class="account_button" onclick="toggleAccount()">
-                <i class="ri-account-circle-line"></i>
-            </a>
-
-            <div class="nav_buttons">
-                <!-- Theme change button -->    
-                <i class="ri-moon-line change-theme" id="theme-button"></i>
-
-                <!-- Toggle button -->
-                <div class="nav_toggle" id="nav-toggle">
-                    <i class="ri-apps-2-line"></i>
-                </div>
-            </div>
+            <a href="admin_logout.php" class="nav_link">Logout</a>
         </nav>
 
         <div class="container">
