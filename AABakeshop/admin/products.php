@@ -63,12 +63,19 @@
             max-height: 500px; /* Adjust as necessary */
             overflow-y: auto;
         }
+
+        .delete-link {
+            color: red; /* Change color to red */
+            font-weight: bold; /* Make the link bold */
+            text-decoration: none; /* Remove underline */
+        }
+        .delete-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
     </style>
 </head>
 <body>
     <!--==================== HEADER ====================-->
-
-
     <header class="header" id="header">
         <nav class="nav container">
             <a href="index.php" class="nav_logo">
@@ -90,9 +97,6 @@
                     <li class="nav_item">
                         <a href="sales.php" class="nav_link">Sales</a>
                     </li>
-                    <li class="nav_item">
-                        <a href="transaction.php" class="nav_link">Transactions</a>
-                    </li>
                 </ul>
 
                 <!-- close button -->
@@ -108,47 +112,49 @@
         </nav>
 
         <div class="container">
-        <h1>List of Products</h1>
-        <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Product Image</th>
-                    <th>Product Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Include the database connection file
-                include_once '../db_connection.php';
-                
-                // SQL query to fetch products
-                $sql = "SELECT * FROM products";
-                $result = $conn->query($sql);
-                
-                if ($result->num_rows > 0) {
-                    // Output data of each row
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td><img src='".$row["product_image"]."' alt='".$row["product_name"]."'></td>";
-                        echo "<td>".$row["product_name"]."</td>";
-                        echo "<td>".$row["Description"]."</td>";
-                        echo "<td>".$row["price"]."</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No products found</td></tr>";
-                }
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
-    </div>
-    </div>
+            <h1>List of Products</h1>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Action</th> <!-- New column for actions -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Include the database connection file
+                        include_once '../db_connection.php';
+                        
+                        // SQL query to fetch products
+                        $sql = "SELECT * FROM products";
+                        $result = $conn->query($sql);
+                        
+                        if ($result->num_rows > 0) {
+                            // Output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td><img src='".$row["product_image"]."' alt='".$row["product_name"]."'></td>";
+                                echo "<td>".$row["product_name"]."</td>";
+                                echo "<td>".$row["Description"]."</td>";
+                                echo "<td>".$row["price"]."</td>";
+                                echo "<td><a href='delete_product.php?id=".$row["product_id"]."' onclick=\"return confirm('Are you sure you want to delete this product?');\">Delete</a></td>"; // Delete link
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='6'>No products found</td></tr>";
+                        }
+                        $conn->close();
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <div class="add_product_form">
+        <div class="add_product_form">
             <h3>Add New Product</h3>
             <form action="insert_products.php" method="post" enctype="multipart/form-data">
                 <label for="product_image">Product Image:</label>
@@ -166,11 +172,9 @@
                 <button type="submit" name="submit">Add Product</button>
             </form>
         </div>
-
     </header>
 
     <script src="assets/js/main.js"></script>
-
     <!--========== SCROLL UP ==========-->
     <a href="#" class="scrollup" id="scroll-up">
         <i class="ri-arrow-up-line"></i>
