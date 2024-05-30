@@ -51,7 +51,7 @@
         <nav class="nav container">
             <a href="index.php" class="nav_logo">
                 <img src="../assets/img/cake_logo.png" alt="logo image">
-                AABAKESHOP - Admin
+                AABAKESHOP
             </a>
             <div class="nav_menu" id="nav-menu">
                 <ul class="nav_list">
@@ -67,9 +67,7 @@
                     <li class="nav_item">
                         <a href="sales.php" class="nav_link active-link">Sales</a>
                     </li>
-                    <li class="nav_item">
-                        <a href="transaction.php" class="nav_link">Transactions</a>
-                    </li>
+                    
                 </ul>
                 <div class="nav_close" id="nav-close">
                     <i class="ri-close-line"></i>

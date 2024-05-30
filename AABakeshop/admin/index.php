@@ -22,7 +22,7 @@
             <nav class="nav container">
                 <a href="#" class="nav_logo">
                     <img src="../assets/img/cake_logo.png" alt="logo image">
-                    AA BAKESHOP
+                    AABAKESHOP
                 </a>
 
                 <div class="nav_menu" id="nav-menu">
@@ -39,9 +39,7 @@
                         <li class="nav_item">
                             <a href="sales.php" class="nav_link">Sales</a>
                         </li>
-                        <li class="nav_item">
-                            <a href="transaction.php" class="nav_link">Transactions</a>
-                        </li>
+                
                     </ul>
 
                     <!-- close button -->

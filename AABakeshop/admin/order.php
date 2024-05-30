@@ -56,7 +56,7 @@
         <nav class="nav container">
             <a href="#" class="nav_logo">
                 <img src="../assets/img/cake_logo.png" alt="logo image">
-                AA BAKESHOP
+                AABAKESHOP
             </a>
 
             <div class="nav_menu" id="nav-menu">
@@ -109,6 +109,7 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Order Date</th>
+                    <th>Status</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
@@ -119,7 +120,7 @@
                 
                 // Initialize variables
                 $filter_date = isset($_GET['filter_date']) ? $_GET['filter_date'] : '';
-                $sql = "SELECT o.order_id, o.user_id, o.product_id, p.product_name, o.quantity, o.price, o.order_date, (o.quantity * o.price) as subtotal
+                $sql = "SELECT o.order_id, o.user_id, o.product_id, p.product_name, o.quantity, o.price, o.order_date, (o.quantity * o.price) as subtotal, o.status
                         FROM orders o
                         JOIN products p ON o.product_id = p.product_id";
                 
@@ -143,15 +144,15 @@
                         echo "<td>".$row["quantity"]."</td>";
                         echo "<td>".$row["price"]."</td>";
                         echo "<td>".$row["order_date"]."</td>";
+                        echo "<td>".$row["status"]."</td>";
                         echo "<td>".$row["subtotal"]."</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='8'>No orders found</td></tr>";
+                    echo "<tr><td colspan='9'>No orders found</td></tr>";
                 }
                 $conn->close();
                 ?>
-              
             </tbody>
         </table>
     </div>
