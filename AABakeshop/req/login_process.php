@@ -24,9 +24,15 @@ if (isset($_POST['uname']) && isset($_POST['pass'])) {
         $user = $result->fetch_assoc();
 
         if (password_verify($pass, $user['password'])) {
+            // Update last_login field
+            $update_last_login = $conn->prepare("UPDATE user SET last_login = NOW() WHERE user_id = ?");
+            $update_last_login->bind_param("i", $user['user_id']);
+            $update_last_login->execute();
+            
+            // Set session variables
             $_SESSION['username'] = $uname;
             $_SESSION['user_id'] = $user['user_id'];
-            header("Location: ../user/index.html");
+            header("Location: ../user/indexs.php");
             exit;
         } else {
             $em = "Incorrect Password";
