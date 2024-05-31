@@ -29,13 +29,20 @@ try {
             $order_date = date('Y-m-d H:i:s');
             $status = 'pending';
 
+            // Insert the order into the orders table
             $stmt = $conn->prepare("INSERT INTO orders (user_id, session_id, product_id, product_name, price, quantity, subtotal, order_date, status, tracking_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("isisdiisss", $user_id, $session_id, $item['product_id'], $item['product_name'], $item['price'], $item['quantity'], $item['subtotal'], $order_date, $status, $tracking_number);
 
             if (!$stmt->execute()) {
-                // Print error info
-                print_r($stmt->error);
                 throw new Exception("Failed to insert order item.");
+            }
+
+            // Decrease the stock of the product
+            $update_stock = $conn->prepare("UPDATE products SET stock = stock - ? WHERE product_id = ?");
+            $update_stock->bind_param("ii", $item['quantity'], $item['product_id']);
+
+            if (!$update_stock->execute()) {
+                throw new Exception("Failed to update product stock.");
             }
         }
 
