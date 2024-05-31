@@ -18,13 +18,16 @@
         /* Table styles */
         table {
             width: 100%;
+            max-width: 1200px; /* Set a maximum width */
+            margin: 0 auto; /* Center the table */
             border-collapse: collapse;
             margin-top: 20px;
         }
         th, td {
-            padding: 12px 15px;
+            padding: 15px 20px; /* Increase padding */
             text-align: left;
             border-bottom: 1px solid #ddd;
+            white-space: nowrap;
         }
         th {
             background-color: #f2f2f2;
@@ -37,7 +40,7 @@
         tr:hover {
             background-color: #f2f2f2;
         }
-        
+
         /* Heading styles */
         h1 {
             text-align: center;
@@ -109,6 +112,7 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Order Date</th>
+                    <th>Tracking Number</th>
                     <th>Status</th>
                     <th>Subtotal</th>
                 </tr>
@@ -120,7 +124,7 @@
                 
                 // Initialize variables
                 $filter_date = isset($_GET['filter_date']) ? $_GET['filter_date'] : '';
-                $sql = "SELECT o.order_id, o.user_id, o.product_id, p.product_name, o.quantity, o.price, o.order_date, (o.quantity * o.price) as subtotal, o.status
+                $sql = "SELECT o.order_id, o.user_id, o.product_id, p.product_name, o.quantity, o.price, o.order_date, o.tracking_number, o.status, (o.quantity * o.price) as subtotal
                         FROM orders o
                         JOIN products p ON o.product_id = p.product_id";
                 
@@ -144,12 +148,13 @@
                         echo "<td>".$row["quantity"]."</td>";
                         echo "<td>".$row["price"]."</td>";
                         echo "<td>".$row["order_date"]."</td>";
+                        echo "<td>".$row["tracking_number"]."</td>"; // Display tracking number
                         echo "<td>".$row["status"]."</td>";
                         echo "<td>".$row["subtotal"]."</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='9'>No orders found</td></tr>";
+                    echo "<tr><td colspan='10'>No orders found</td></tr>";
                 }
                 $conn->close();
                 ?>
