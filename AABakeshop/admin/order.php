@@ -76,6 +76,14 @@
                     <li class="nav_item">
                         <a href="sales.php" class="nav_link">Sales</a>
                     </li>
+
+                    <li class="nav_item">
+                        <a href="transaction.php" class="nav_link ">Transaction</a>
+                    </li>
+
+                    <li class="nav_item">
+                        <a href="inventory.php" class="nav_link ">Inventory</a>
+                    </li>
                 </ul>
 
                 <!-- close button -->

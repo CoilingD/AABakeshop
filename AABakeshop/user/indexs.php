@@ -142,7 +142,6 @@
     
                     <?php
                     include 'fetch_products.php'; // Fetch product data
-                    
                     foreach ($products as $product) {
                         ?>
                         <article class="popular_card">
