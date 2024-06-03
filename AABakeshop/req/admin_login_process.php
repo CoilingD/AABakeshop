@@ -26,6 +26,7 @@ if (isset($_POST['uname']) && isset($_POST['pass'])) {
         if (password_verify($pass, $admin['password'])) {
             $_SESSION['username'] = $uname;
             $_SESSION['admin_id'] = $admin['user_id'];
+            $_SESSION['is_admin'] = true;  // Set admin session variable
             header("Location: ../admin/index.php");
             exit;
         } else {
