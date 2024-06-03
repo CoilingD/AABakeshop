@@ -1,3 +1,9 @@
+<?php
+include '../db_connection.php'; // Ensure this path is correct
+include 'admin_auth.php';
+
+checkAdminLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

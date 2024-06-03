@@ -1,6 +1,8 @@
 <?php
-session_start();
 include '../db_connection.php'; // Ensure this path is correct
+include 'admin_auth.php';
+
+checkAdminLogin();
 
 $sql = "SELECT ingredient_id, ingredient_name, usages, stock FROM ingredients";
 $result = $conn->query($sql);
